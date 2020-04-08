@@ -1,5 +1,5 @@
 {
-  "name": "keycloak",
+  "name": "keycloak-authenticator",
   "version": "1.0.0",
   "description": "client to manage keycloak api",
   "main": "lib/index.js",
