@@ -82,11 +82,13 @@ export class KeycloakAuthentication {
         });
     
         let token;
+        let accessTokenJson; 
         if (resp.ok)
         {
             const respData = await resp.json();
             console.log('respData: \n', respData); 
             token = respData.access_token;
+            accessTokenJson = this.decodeToken(token); 
             console.assert(token, "Failed to get 'access_token' from auth response");
             console.log("Login successful");
         }
@@ -94,7 +96,7 @@ export class KeycloakAuthentication {
         {
             console.error('Failed to access, reason: ', await resp.json());
         }
-        return token;
+        return {accessToken: token, accessTokenJson: accessTokenJson};
     }
 
     public async login() {
