@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": false,
+    "declaration": true,
+    "paths": {
+      "*": [
+        "types/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
+    "pretty": true,
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": "lib",
+    "baseUrl": "src",
+    "strict": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "**/*.ts", "event-manager.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
+}
