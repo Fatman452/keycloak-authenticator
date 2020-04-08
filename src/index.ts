@@ -69,7 +69,7 @@ export class KeycloakAuthentication {
             client_secret: clientSecret,//'3101f87c-a64b-48a7-b6ca-480459da47b3',
             username: username,
             password: password,
-            grant_type: 'client_credentials',
+            grant_type: 'password',
         };
 
         const resp = await fetch(`${this.BASE_URI}/realms/${this.REALM}/protocol/openid-connect/token`, {
@@ -85,7 +85,7 @@ export class KeycloakAuthentication {
         if (resp.ok)
         {
             const respData = await resp.json();
-    
+            console.log('respData: \n', respData); 
             token = respData.access_token;
             console.assert(token, "Failed to get 'access_token' from auth response");
             console.log("Login successful");
