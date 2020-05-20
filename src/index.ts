@@ -20,7 +20,7 @@ export class KeycloakAuthentication {
         this.USERNAME = config.KEYCLOAK_USERNAME; 
     }
 
-    private decodeToken(token) {
+    public decodeToken(token) {
         return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString() ); 
         //Buffer.from(token.split('.')[1], 'base64'))
     }
@@ -30,13 +30,34 @@ export class KeycloakAuthentication {
             let cert = await this.getPublicKey(); 
             let publicKEY = Buffer.from(`-----BEGIN CERTIFICATE-----\n${cert}\n-----END CERTIFICATE-----`,'utf8');
             let result = await verifyToken(token, publicKEY); 
+          
             return true; 
         }
         catch (error) {
-            console.error(`Invalid token: reason: ${error.message}`); 
+            console.log(error);
+            console.error(`Invalid token, reason: ${error.message}`); 
             return false; 
         }
     }
+
+    // public async validateAccessToken(token, match_properties) : Promise<boolean> {
+    //     try { 
+    //         let cert = await this.getPublicKey(); 
+    //         let publicKEY = Buffer.from(`-----BEGIN CERTIFICATE-----\n${cert}\n-----END CERTIFICATE-----`,'utf8');
+    //         let result = await verifyToken(token, publicKEY); 
+    //         console.log(result); 
+    //         for (let [key, value] of Object.entries(result)){
+    //             if (match_properties[key]) {
+                    
+    //             }
+    //         }
+    //         return true; 
+    //     }
+    //     catch (error) {
+    //         console.error(`Invalid token: reason: ${error.message}`); 
+    //         return false; 
+    //     }
+    // }
     public async getPublicKey() { 
         const resp = await fetch(`${this.BASE_URI}/realms/${this.REALM}/protocol/openid-connect/certs`, {
             method: 'GET',
@@ -50,9 +71,9 @@ export class KeycloakAuthentication {
         if (resp.ok) {
             let resData = await resp.json();
             cert = resData.keys[0].x5c[0]; 
-            console.assert(resData, "can not get Certs Data"); 
+            console.assert(resData, "Can not get Certs Data"); 
             //console.assert(cert);
-            console.log("Cert obtained succesfully");
+            //console.log("Cert obtained succesfully");
             return cert; 
         }
         else {
@@ -86,11 +107,11 @@ export class KeycloakAuthentication {
         if (resp.ok)
         {
             const respData = await resp.json();
-            console.log('respData: \n', respData); 
+            //console.log('respData: \n', respData); 
             token = respData.access_token;
             accessTokenJson = this.decodeToken(token); 
             console.assert(token, "Failed to get 'access_token' from auth response");
-            console.log("Login successful");
+            //console.log("Login successful");
         }
         else
         {
@@ -105,7 +126,7 @@ export class KeycloakAuthentication {
         let tokens;
     
         const parsedToken = this.decodeToken(refreshToken);
-        console.log(`Beginning token refresh for token ${parsedToken.azp}`);
+        //console.log(`Beginning token refresh for token ${parsedToken.azp}`);
     
         const clientId = parsedToken.azp;
     
@@ -130,7 +151,7 @@ export class KeycloakAuthentication {
     
         if (resp.ok)
         {
-            console.log("Refresh successful");
+            //console.log("Refresh successful");
             tokens = await resp.json();
     
     
