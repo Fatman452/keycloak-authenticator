@@ -1,6 +1,6 @@
 {
   "name": "keycloak-authenticator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "client to manage keycloak api",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
