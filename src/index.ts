@@ -22,7 +22,6 @@ export class KeycloakAuthentication {
 
     public decodeToken(token) {
         return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString() ); 
-        //Buffer.from(token.split('.')[1], 'base64'))
     }
 
     public async validateAccessToken(token) : Promise<boolean> {
@@ -40,24 +39,6 @@ export class KeycloakAuthentication {
         }
     }
 
-    // public async validateAccessToken(token, match_properties) : Promise<boolean> {
-    //     try { 
-    //         let cert = await this.getPublicKey(); 
-    //         let publicKEY = Buffer.from(`-----BEGIN CERTIFICATE-----\n${cert}\n-----END CERTIFICATE-----`,'utf8');
-    //         let result = await verifyToken(token, publicKEY); 
-    //         console.log(result); 
-    //         for (let [key, value] of Object.entries(result)){
-    //             if (match_properties[key]) {
-                    
-    //             }
-    //         }
-    //         return true; 
-    //     }
-    //     catch (error) {
-    //         console.error(`Invalid token: reason: ${error.message}`); 
-    //         return false; 
-    //     }
-    // }
     public async getPublicKey() { 
         const resp = await fetch(`${this.BASE_URI}/realms/${this.REALM}/protocol/openid-connect/certs`, {
             method: 'GET',
